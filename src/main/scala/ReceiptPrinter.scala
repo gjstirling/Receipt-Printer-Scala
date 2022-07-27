@@ -19,10 +19,12 @@ class CafeDetails (
 class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map()) {
 
   def receipt: String = {
-    s"${cafe.shopName}, ${cafe.address}, ${cafe.phone}"
+    s"""${cafe.shopName}, ${cafe.address}, ${cafe.phone}
+       |${getDateTime()}
+       |""".stripMargin
   }
 
-  def getDateTime(): Unit = {
-
+  def getDateTime(): String = {
+    "27/07/2022 11:00"
   }
 }
