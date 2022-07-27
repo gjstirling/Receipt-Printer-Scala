@@ -34,19 +34,19 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
         )
         printer.receipt should include ("The Coffee Connection, 123 Lakeside Way, 16503600708")
       }
-
+// Needs mock to pass (Date)
 //      "Contains the date/time it was created" in {
 //        // to add mocks
 //        val printer = new ReceiptPrinter(
 //          coffeeConnectionCafe,
 //          Map("Cafe Latte" -> 1)
 //        )
-//        printer.receipt should include ("27/7/2022 14:11")
+//        printer.receipt should include ("27/7/2022 18:50")
 //      }
 
       "Can return a single item ordered" in {
         val order = Map(
-          "Flat White" -> 475
+          "Flat White" -> 1
         )
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe, order
@@ -56,13 +56,13 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
 
       "Can return a two different items ordered" in {
         val order = Map(
-          "Flat White" -> 475,
-          "Muffin Of The Day" -> 455
+          "Flat White" -> 2,
+          "Muffin Of The Day" -> 1
         )
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe, order
         )
-        printer.receipt should include ("1 x Flat White     4.75")
+        printer.receipt should include ("2 x Flat White     9.50")
         printer.receipt should include ("1 x Muffin Of The Day     4.55")
       }
     }
@@ -70,15 +70,3 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
 }
 
 
-// "Can tally up multiple items" in {
-//        val order = Map(
-//          "Flat White" -> 475,
-//          "Flat White" -> 475,
-//          "Americano" -> 375
-//        )
-//        val printer = new ReceiptPrinter(
-//          coffeeConnectionCafe, order
-//        )
-//        printer.receipt should include ("2 x Flat White     9.50")
-//        printer.receipt should include ("1 x Americano     4.55")
-//      }

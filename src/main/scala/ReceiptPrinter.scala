@@ -37,14 +37,15 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
   }
 
   private[this] def stringifyOrder(order: Map[String, Int]): String = {
-    var stringOrder = order map {case (key, value) => (
-      s"1 x ${key}     ${cafe.prices(key)}"
+    var stringOrder = order map {case (key, quantity) => (
+      s"${quantity} x ${key}     ${calculateTotalPrice(cafe.prices(key), quantity)}"
     )}
     stringOrder.mkString("\n")
   }
-}
 
-//private[this] def convertToGBP(value: Int): String ={
-//  val (pounds, pence) = value.toString.splitAt(value.toString.length - 2)
-//  pounds + "." + pence
-//}
+  def calculateTotalPrice(price: Double, quantity: Int): String ={
+    val formatter = java.text.NumberFormat.getCurrencyInstance
+    val calculatePrice = price*100*quantity/100
+    formatter.format(calculatePrice).substring(1)
+  }
+}
