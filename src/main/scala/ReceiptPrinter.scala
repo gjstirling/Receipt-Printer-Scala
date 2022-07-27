@@ -23,7 +23,7 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
   def receipt: String = {
     var orderDetails = stringifyOrder(order)
     var date = getDateTime()
-    s"""${cafe.shopName}, ${cafe.address}, ${cafe.phone}
+      s"""${cafe.shopName}, ${cafe.address}, ${cafe.phone}
        |${date}
        |${orderDetails}
        |""".stripMargin
@@ -36,10 +36,15 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
     s"${date} ${time}"
   }
 
-  def stringifyOrder(order: Map[String, Int]): String = {
+  private[this] def stringifyOrder(order: Map[String, Int]): String = {
     var stringOrder = order map {case (key, value) => (
-      s"1 x ${key}     ${value}"
+      s"1 x ${key}     ${cafe.prices(key)}"
     )}
     stringOrder.mkString("\n")
   }
 }
+
+//private[this] def convertToGBP(value: Int): String ={
+//  val (pounds, pence) = value.toString.splitAt(value.toString.length - 2)
+//  pounds + "." + pence
+//}

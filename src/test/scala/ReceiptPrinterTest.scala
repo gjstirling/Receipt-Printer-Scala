@@ -51,7 +51,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe, order
         )
-        printer.receipt should include ("1 x Flat White     475")
+        printer.receipt should include ("1 x Flat White     4.75")
       }
 
       "Can return a two different items ordered" in {
@@ -62,11 +62,23 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe, order
         )
-        printer.receipt should include ("1 x Flat White     475")
-        printer.receipt should include ("1 x Muffin Of The Day     455")
+        printer.receipt should include ("1 x Flat White     4.75")
+        printer.receipt should include ("1 x Muffin Of The Day     4.55")
       }
-
-
     }
   }
 }
+
+
+// "Can tally up multiple items" in {
+//        val order = Map(
+//          "Flat White" -> 475,
+//          "Flat White" -> 475,
+//          "Americano" -> 375
+//        )
+//        val printer = new ReceiptPrinter(
+//          coffeeConnectionCafe, order
+//        )
+//        printer.receipt should include ("2 x Flat White     9.50")
+//        printer.receipt should include ("1 x Americano     4.55")
+//      }
