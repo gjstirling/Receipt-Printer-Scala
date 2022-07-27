@@ -21,8 +21,11 @@ class CafeDetails (
 class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map()) {
 
   def receipt: String = {
+    var orderDetails = stringifyOrder(order)
+    var date = getDateTime()
     s"""${cafe.shopName}, ${cafe.address}, ${cafe.phone}
-       |${getDateTime()}
+       |${date}
+       |${orderDetails}
        |""".stripMargin
   }
 
@@ -31,5 +34,12 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
     var date = s"${now.get(Calendar.DAY_OF_MONTH)}/${now.get(Calendar.MONTH)+1}/${now.get(Calendar.YEAR)}"
     var time = s"${now.get(Calendar.HOUR_OF_DAY)}:${now.get(Calendar.MINUTE)}"
     s"${date} ${time}"
+  }
+
+  def stringifyOrder(order: Map[String, Int]): String = {
+    var stringOrder = order map {case (key, value) => (
+      s"1 x ${key}     ${value}"
+    )}
+    stringOrder.mkString("\n")
   }
 }

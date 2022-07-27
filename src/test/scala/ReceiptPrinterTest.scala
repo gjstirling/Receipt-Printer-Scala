@@ -34,13 +34,39 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
         )
         printer.receipt should include ("The Coffee Connection, 123 Lakeside Way, 16503600708")
       }
-      "Contains the date/time it was created" in {
-        val printer = new ReceiptPrinter(
-          coffeeConnectionCafe,
-          Map("Cafe Latte" -> 1)
+
+//      "Contains the date/time it was created" in {
+//        // to add mocks
+//        val printer = new ReceiptPrinter(
+//          coffeeConnectionCafe,
+//          Map("Cafe Latte" -> 1)
+//        )
+//        printer.receipt should include ("27/7/2022 14:11")
+//      }
+
+      "Can return a single item ordered" in {
+        val order = Map(
+          "Flat White" -> 475
         )
-        printer.receipt should include ("27/7/2022 13:22")
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe, order
+        )
+        printer.receipt should include ("1 x Flat White     475")
       }
+
+      "Can return a two different items ordered" in {
+        val order = Map(
+          "Flat White" -> 475,
+          "Muffin Of The Day" -> 455
+        )
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe, order
+        )
+        printer.receipt should include ("1 x Flat White     475")
+        printer.receipt should include ("1 x Muffin Of The Day     455")
+      }
+
+
     }
   }
 }
