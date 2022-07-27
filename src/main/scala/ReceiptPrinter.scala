@@ -9,6 +9,8 @@
  * - the VAT (20% of total price)
  */
 
+import java.util.Calendar
+
 class CafeDetails (
                     val shopName: String,
                     val address: String,
@@ -25,6 +27,9 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
   }
 
   def getDateTime(): String = {
-    "27/07/2022 11:00"
+    var now = Calendar.getInstance()
+    var date = s"${now.get(Calendar.DAY_OF_MONTH)}/${now.get(Calendar.MONTH)+1}/${now.get(Calendar.YEAR)}"
+    var time = s"${now.get(Calendar.HOUR_OF_DAY)}:${now.get(Calendar.MINUTE)}"
+    s"${date} ${time}"
   }
 }

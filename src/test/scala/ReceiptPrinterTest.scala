@@ -39,7 +39,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
           coffeeConnectionCafe,
           Map("Cafe Latte" -> 1)
         )
-        printer.receipt should include ("27/07/2022 11:00")
+        printer.receipt should include ("27/7/2022 13:22")
       }
     }
   }
