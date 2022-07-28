@@ -1,6 +1,5 @@
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-
 import java.time.{Clock, Instant, ZoneId}
 
 class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
