@@ -22,7 +22,4 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
     cafe.shopName
   }
 
-  def getDateTime(): Unit = {
-
-  }
 }
