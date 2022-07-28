@@ -11,6 +11,7 @@
 
 import java.time.{Clock, Instant, ZoneId}
 import java.time.format.DateTimeFormatter
+import scala.math.Equiv
 
 class CafeDetails (
                     val shopName: String,
@@ -28,7 +29,7 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
       s"""${cafe.shopName}, ${cafe.address}, ${cafe.phone}
        |${date}
        |${orderDetails}
-       |${totalPrice}
+       |Total: ${totalPrice}
        |""".stripMargin
   }
 
@@ -52,7 +53,12 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
     formatter.format(calculatePrice).substring(1)
   }
 
-  private[this] def orderTotal(order: Map[String, Int]): String ={
-    "Total: 14.05"
+  private[this] def orderTotal(order: Map[String, Int]): Double ={
+    var itemsCost = order map {case (item, quantity) => (
+      cafe.prices(item)*quantity
+    )}
+    var result = itemsCost.reduce(_ + _)
+    var total = calculatePrice(result, 1)
+    total.toDouble
   }
 }
