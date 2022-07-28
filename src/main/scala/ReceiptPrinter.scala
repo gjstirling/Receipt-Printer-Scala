@@ -30,6 +30,7 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
        |${date}
        |${orderDetails}
        |Total: ${totalPrice}
+       |VAT: ${vat(totalPrice)}
        |""".stripMargin
   }
 
@@ -60,5 +61,10 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
     var result = itemsCost.reduce(_ + _)
     var total = calculatePrice(result, 1)
     total.toDouble
+  }
+
+  private[this] def vat(total: Double): String ={
+    var vat = total * 0.2
+    calculatePrice(vat, 1)
   }
 }
