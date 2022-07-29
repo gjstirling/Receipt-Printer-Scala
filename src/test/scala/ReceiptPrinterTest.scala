@@ -79,6 +79,23 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers with MockFactory {
         printer.receipt should include ("2  x Flat White           9.50")
       }
 
+      "Displays order subTotal" in {
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe,
+          Map("Cafe Latte" -> 1,
+            "Flat White" -> 2)
+        )
+        printer.receipt should include ("Total: 14.25")
+      }
+
+      "Displays order VAT" in {
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe,
+          Map("Cafe Latte" -> 1,
+            "Flat White" -> 2)
+        )
+        printer.receipt should include ("VAT: 2.85")
+      }
     }
   }
 }
