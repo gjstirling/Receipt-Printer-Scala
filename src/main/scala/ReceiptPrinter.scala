@@ -1,5 +1,6 @@
 import java.time.{Clock, Instant, ZoneId}
 import java.time.format.DateTimeFormatter
+// VAT is added after calculating total
 
 class CafeDetails (
                     val shopName: String,
