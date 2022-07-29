@@ -8,6 +8,8 @@
  * - the total price
  * - the VAT (20% of total price)
  */
+import java.time.{Instant, ZoneId}
+import java.time.format.DateTimeFormatter
 
 class CafeDetails (
                     val shopName: String,
@@ -16,9 +18,15 @@ class CafeDetails (
                     val prices: Map[String, Double]
                   )
 
-class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map()) {
+class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(), var instantFactory: FactoryBase[Instant] = InstantFactory) {
 
   def receipt: String = {
-    cafe.shopName + cafe.address + cafe.phone + "28/07/2022 15:35"}
+    cafe.shopName + cafe.address + cafe.phone + formatInstant(instantFactory.create())
+  }
+
+  val formatInstant = (instant: Instant) => {
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.systemDefault())
+    dateTimeFormatter.format(instant)
+  }
 
 }
