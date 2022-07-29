@@ -96,6 +96,28 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers with MockFactory {
         )
         printer.receipt should include ("VAT: 2.85")
       }
+
+      "Formats into receipt style format" in {
+        val mockInstantFactory = mock[FactoryBase[Instant]]
+        val mockDate = Instant.parse("2022-07-28T14:35:00.00Z")
+
+        (mockInstantFactory.create _).expects().returning(mockDate)
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe,
+          Map("Cafe Latte" -> 1,
+            "Flat White" -> 2),
+          mockInstantFactory
+        )
+        printer.receipt should include (
+          """The Coffee Connection, 123 Lakeside Way, 16503600708
+            |28/07/2022 15:35
+            |1  x Cafe Latte           4.75
+            |2  x Flat White           9.50
+            |Total: 14.25
+            |VAT: 2.85
+            |""".stripMargin
+        )
+      }
     }
   }
 }

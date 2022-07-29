@@ -12,12 +12,18 @@ class CafeDetails (
 class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(), var instantFactory: FactoryBase[Instant] = InstantFactory) {
 
   def receipt: String = {
+    val date = formatInstant(instantFactory.create())
     val findPriceOfItems = order.map(mapOrderItemWithPrice)
-    val mapOrderItemsAndPriceAsLine = findPriceOfItems.map(orderPrinter).mkString("")
+    val mapOrderItemsAndPriceAsLine = findPriceOfItems.map(orderPrinter).mkString("\n")
     val calculateSubTotal = findPriceOfItems.foldLeft(0.0) { (total, orderItem) => total + orderItem._3 }
     val subTotal = s"Total: ${calculateSubTotal}"
     val vat = s"VAT: ${calculateSubTotal*0.2}"
-    cafe.shopName + cafe.address + cafe.phone + formatInstant(instantFactory.create()) + mapOrderItemsAndPriceAsLine + subTotal + vat
+    s"""${cafe.shopName}, ${cafe.address}, ${cafe.phone}
+       |${date}
+       |${mapOrderItemsAndPriceAsLine}
+       |${subTotal}
+       |${vat}
+       |""".stripMargin
   }
 
   val formatInstant = (instant: Instant) => {
