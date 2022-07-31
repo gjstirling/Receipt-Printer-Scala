@@ -1,13 +1,5 @@
-
 import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
-
-class CafeDetails (
-                    val shopName: String,
-                    val address: String,
-                    val phone: String,
-                    val prices: Map[String, Double]
-                  )
 
 class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(), var instantFactory: FactoryBase[Instant] = InstantFactory) {
 
