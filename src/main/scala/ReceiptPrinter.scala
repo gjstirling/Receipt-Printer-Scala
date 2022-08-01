@@ -1,7 +1,7 @@
 import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
 
-class ReceiptPrinter(val cafe: CafeDetails, var order: Order = new Order(), val total:Double = 0.0, val vat:Double = 0.0, var instantFactory: FactoryBase[Instant] = InstantFactory) {
+class ReceiptPrinter(val cafe: CafeDetails, var order: Order = new Order(), val total: Double, val vat: Double, var instantFactory: FactoryBase[Instant] = InstantFactory) {
 
   def receipt: String = {
     val date = formatInstant(instantFactory.create())

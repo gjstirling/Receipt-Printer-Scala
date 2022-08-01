@@ -5,5 +5,5 @@ class OrderItem (
                 )
 
 class Order (
-            val items: List[OrderItem] = List[OrderItem](),
+            var items: List[OrderItem] = List[OrderItem](),
             )

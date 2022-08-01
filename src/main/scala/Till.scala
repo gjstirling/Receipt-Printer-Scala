@@ -1,4 +1,4 @@
-class Till (val order: Order = new Order()) {
+class Till (val cafe: CafeDetails, val order: Order = new Order()) {
 
   def calculateSubtotal = {
     order.items.foldLeft(0.0) { (total, orderItem) => total + orderItem.totalPrice }
@@ -11,6 +11,18 @@ class Till (val order: Order = new Order()) {
   def calculateTotal: Double = {
     this.calculateSubtotal + this.calculateVAT
   }
+
+  def getOrderItem(itemName: String, quantity: Int) = {
+    cafe.prices.get(itemName) match {
+      case Some(pricePerUnit) => new OrderItem(itemName, quantity, pricePerUnit * quantity)
+      case None => throw new IllegalArgumentException(
+        "That item doesn't exist in menu!"
+      )
+    }
+  }
+
+  def addItemToOrder(itemName: String, quantity: Int) =
+    order.items = order.items ++ List(getOrderItem(itemName, quantity))
 
 }
 

@@ -33,7 +33,9 @@ class ReceiptPrinterTest extends AnyWordSpec with Matchers with MockFactory {
       "contains the name of the cafe" in {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe,
-          new Order(List(new OrderItem("Cafe Latte", 1, 4.75)))
+          new Order(List(new OrderItem("Cafe Latte", 1, 4.75))),
+          4.55,
+          1.00
         )
         printer.receipt should include ("The Coffee Connection")
       }
@@ -41,7 +43,9 @@ class ReceiptPrinterTest extends AnyWordSpec with Matchers with MockFactory {
       "contains the address of the cafe" in {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe,
-          new Order(List(new OrderItem("Cafe Latte", 1, 4.75)))
+          new Order(List(new OrderItem("Cafe Latte", 1, 4.75))),
+          4.55,
+          1.00
         )
         printer.receipt should include ("123 Lakeside Way")
       }
@@ -49,7 +53,9 @@ class ReceiptPrinterTest extends AnyWordSpec with Matchers with MockFactory {
       "contains the phone number of the cafe" in {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe,
-          new Order(List(new OrderItem("Cafe Latte", 1, 4.75)))
+          new Order(List(new OrderItem("Cafe Latte", 1, 4.75))),
+          4.55,
+          1.00
         )
         printer.receipt should include ("16503600708")
       }
@@ -74,7 +80,9 @@ class ReceiptPrinterTest extends AnyWordSpec with Matchers with MockFactory {
       "Displays the items ordered" in {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe,
-          new Order(List(new OrderItem("Cafe Latte", 1, 4.75), new OrderItem("Flat White", 2, 9.50)))
+          new Order(List(new OrderItem("Cafe Latte", 1, 4.75), new OrderItem("Flat White", 2, 9.50))),
+          4.00,
+          1.00
         )
         printer.receipt should include ("1  x Cafe Latte           4.75")
         printer.receipt should include ("2  x Flat White           9.50")
