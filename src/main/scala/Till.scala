@@ -4,7 +4,9 @@ class Till (val order: Order = new Order()) {
     order.items.foldLeft(0.0) { (total, orderItem) => total + orderItem.totalPrice }
   }
 
-
+  def calculateVAT = {
+    ((this.calculateSubtotal * 100).toInt * 0.2)/100
+  }
 
 }
 
