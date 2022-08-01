@@ -6,4 +6,5 @@ lazy val root = (project in file("."))
   .settings(
     name := "receipt-printer"
   )
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.11"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test"
+libraryDependencies += "org.scalamock" %% "scalamock" % "5.1.0" % "test"
