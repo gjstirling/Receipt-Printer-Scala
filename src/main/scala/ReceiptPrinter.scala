@@ -1,13 +1,12 @@
 import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
 
-class ReceiptPrinter(val cafe: CafeDetails, var order: Order = new Order(), val total: Double, val vat: Double, var instantFactory: FactoryBase[Instant] = InstantFactory) {
+class ReceiptPrinter(val cafe: CafeDetails, var date : Instant, var order: Order = new Order(), val total: Double, val vat: Double) {
 
   def receipt: String = {
-    val date = formatInstant(instantFactory.create())
     val mapOrderItemsAsLineItem = order.items.map(orderItemsPrinter).mkString("\n")
     s"""${cafe.shopName}, ${cafe.address}, ${cafe.phone}
-       |${date}
+       |${formatInstant(date)}
        |${mapOrderItemsAsLineItem}
        |Total: ${total}
        |VAT: ${vat}

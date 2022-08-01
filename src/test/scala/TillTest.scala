@@ -40,7 +40,7 @@ class TillTest extends AnyWordSpec with Matchers with MockFactory {
     }
 
     "Calculate the VAT of an order" which {
-      "VAT" in {
+      "Returns a double" in {
         val mockOrder = new Order(List(new OrderItem("Flat White", 1, 4.75), new OrderItem("Cafe Latte", 1, 4.75)))
         val subject = new Till(
           coffeeConnectionCafe,
