@@ -6,6 +6,4 @@ class OrderItem (
 
 class Order (
             val items: List[OrderItem] = List[OrderItem](),
-            val totalPrice: Double = 0,
-            val VAT: Double = 0
             )

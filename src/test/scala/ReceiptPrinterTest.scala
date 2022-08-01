@@ -4,7 +4,7 @@ import org.scalamock.scalatest.MockFactory
 
 import java.time.{Instant}
 
-class ReceiptPrinterSpec extends AnyWordSpec with Matchers with MockFactory {
+class ReceiptPrinterTest extends AnyWordSpec with Matchers with MockFactory {
   val coffeeConnectionCafe = new CafeDetails(
     "The Coffee Connection",
     "123 Lakeside Way",
