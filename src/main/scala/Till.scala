@@ -1,7 +1,7 @@
 class Till (val order: Order = new Order()) {
 
   def calculateSubtotal = {
-
+    order.items.foldLeft(0.0) { (total, orderItem) => total + orderItem.totalPrice }
   }
 
 
