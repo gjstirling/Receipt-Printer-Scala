@@ -81,7 +81,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers with MockFactory {
       "Displays order subTotal" in {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe,
-          new Order(List(new OrderItem("Cafe Latte", 1, 4.75), new OrderItem("Flat White", 2, 4.75)), 14.25, 2.00)
+          new Order(List(new OrderItem("Cafe Latte", 1, 4.75), new OrderItem("Flat White", 2, 9.50)), 14.25, 2.00)
         )
         printer.receipt should include ("Total: 14.25")
       }
