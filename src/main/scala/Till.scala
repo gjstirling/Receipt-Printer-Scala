@@ -8,6 +8,10 @@ class Till (val order: Order = new Order()) {
     ((this.calculateSubtotal * 100).toInt * 0.2)/100
   }
 
+  def calculateTotal: Double = {
+    this.calculateSubtotal + this.calculateVAT
+  }
+
 }
 
 //val findPriceOfItems = order.map(mapOrderItemWithPrice)

@@ -21,5 +21,14 @@ class TillTest extends AnyWordSpec with Matchers with MockFactory {
         subject.calculateVAT shouldBe 1.90
       }
     }
+
+    "Calculate the total cost of the order" which {
+      "Sums the subTotal and VAT" in {
+        val mockOrder = new Order(List(new OrderItem("Flat White", 1, 4.75), new OrderItem("Cafe Latte", 1, 4.75)))
+        val subject = new Till(mockOrder)
+
+        subject.calculateTotal shouldBe 11.40
+      }
+    }
   }
 }
