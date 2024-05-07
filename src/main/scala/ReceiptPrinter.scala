@@ -18,8 +18,10 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
    * - the VAT (20% of total price)
    */
   val formattedDate: String = {
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm").withZone(ZoneId.systemDefault())
-    dateTimeFormatter.format(date)
+    DateTimeFormatter
+      .ofPattern("MM/dd/yyyy HH:mm")
+      .withZone(ZoneId.systemDefault())
+      .format(date)
   }
 
   val formatOrder: Map[String, Int] => List[String] = (order: Map[String, Int]) => {
@@ -42,6 +44,7 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
                            |${formattedDate}
                            |${formatOrder(order).mkString("\n")}
                            |total price: ${s"""${f"$subtotal%.2f"}"""}
+                           |VAT: ${s"""${f"${subtotal*0.2}%.2f"}"""}
        """.stripMargin
 
     println(Console.MAGENTA + result + Console.RESET)
