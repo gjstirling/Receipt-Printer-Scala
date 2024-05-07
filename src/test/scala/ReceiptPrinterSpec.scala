@@ -2,8 +2,10 @@
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
+import java.time.{Clock, Instant, ZoneId}
+
 class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
-  val coffeeConnectionCafe = new CafeDetails(
+  val coffeeConnectionCafe: CafeDetails = CafeDetails(
     "The Coffee Connection",
     "123 Lakeside Way",
     "16503600708",
@@ -30,12 +32,36 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
     "format a receipt" which {
       "contains the name of the cafe" in {
         val printer = new ReceiptPrinter(
-          coffeeConnectionCafe,
-          Map("Cafe Latte" -> 1)
+          coffeeConnectionCafe
         )
         printer.receipt should include ("The Coffee Connection")
       }
       // add more tests here.
+
+      "contain the cafe's address" in {
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe
+        )
+        printer.receipt should include("123 Lakeside Way")
+      }
+
+      "contain the cafe's phone number" in {
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe
+        )
+        printer.receipt should include("16503600708")
+      }
+
+      "include a timestamp" in {
+        val mockTime = "2019-01-01T10:35:00Z"
+        val fixedClock = Clock.fixed(Instant.parse(mockTime), ZoneId.systemDefault())
+
+        val printer = new ReceiptPrinter(
+          cafe = coffeeConnectionCafe,
+          date = Instant.now(fixedClock)
+        )
+        printer.receipt should include("01/01/2019 10:35")
+      }
     }
   }
 }

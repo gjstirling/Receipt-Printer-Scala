@@ -1,12 +1,10 @@
-// src/main/scala/ReceiptPrinter.scala
-class CafeDetails (
-                    val shopName: String,
-                    val address: String,
-                    val phone: String,
-                    val prices: Map[String, Double]
-                  )
+import java.time.{Instant, ZoneId}
+import java.time.format.DateTimeFormatter
 
-class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map()) {
+// src/main/scala/ReceiptPrinter.scala
+case class CafeDetails(shopName: String, address: String, phone: String, prices: Map[String, Double])
+
+class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(), date: Instant = Instant.now()) {
 
   /**
    * This method should return a multiline string
@@ -19,7 +17,19 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
    * - the total price
    * - the VAT (20% of total price)
    */
-  def receipt: String = {
-    cafe.shopName
+  val formattedDate: String = {
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm").withZone(ZoneId.systemDefault())
+    dateTimeFormatter.format(date)
   }
+
+
+  def receipt: String = {
+    val result =
+      s"""${cafe.shopName} | ${cafe.address} | ${cafe.phone}
+                           |${formattedDate}""".stripMargin
+
+    println(Console.MAGENTA + result + Console.RESET)
+    result
+  }
+
 }
