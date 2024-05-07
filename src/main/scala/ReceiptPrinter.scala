@@ -22,15 +22,22 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
     dateTimeFormatter.format(date)
   }
 
+  val formatOrder: Map[String, Int] => List[String] = (order: Map[String, Int]) => {
+    order.map { item => {
+      val price = cafe.prices(item._1) * item._2
+
+      s"""${item._2} x ${item._1} ${f"$price%.2f"}"""
+    }
+    }.toList
+  }
+
 
   def receipt: String = {
-    val orderItems = order.map { item => s"1 x ${item._1}" }
-
     val result =
       s"""${cafe.shopName} | ${cafe.address} | ${cafe.phone}
-      ${formattedDate}
-      ${orderItems}
-      """.stripMargin
+                           |${formattedDate}
+                           |${formatOrder(order).mkString("\n")}
+       """.stripMargin
 
     println(Console.MAGENTA + result + Console.RESET)
     result
