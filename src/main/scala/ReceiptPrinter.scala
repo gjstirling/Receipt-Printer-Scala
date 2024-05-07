@@ -24,9 +24,13 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
 
 
   def receipt: String = {
+    val orderItems = order.map { item => s"1 x ${item._1}" }
+
     val result =
       s"""${cafe.shopName} | ${cafe.address} | ${cafe.phone}
-                           |${formattedDate}""".stripMargin
+      ${formattedDate}
+      ${orderItems}
+      """.stripMargin
 
     println(Console.MAGENTA + result + Console.RESET)
     result
