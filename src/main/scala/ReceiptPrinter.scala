@@ -31,12 +31,17 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
     }.toList
   }
 
+  val subtotal: Double = order.map(item => {
+    cafe.prices(item._1) * item._2
+  }).toList.sum
+
 
   def receipt: String = {
     val result =
       s"""${cafe.shopName} | ${cafe.address} | ${cafe.phone}
                            |${formattedDate}
                            |${formatOrder(order).mkString("\n")}
+                           |total price: ${s"""${f"$subtotal%.2f"}"""}
        """.stripMargin
 
     println(Console.MAGENTA + result + Console.RESET)
