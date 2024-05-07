@@ -1,4 +1,5 @@
 // src/test/scala/ReceiptPrinterTest.scala
+
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -34,7 +35,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe
         )
-        printer.receipt should include ("The Coffee Connection")
+        printer.receipt should include("The Coffee Connection")
       }
       // add more tests here.
 
@@ -87,7 +88,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
           order = Map("Cappuccino" -> 1)
         )
 
-        printer.receipt should include("total price: 3.85")
+        printer.receipt should include("Total Price: 3.85")
       }
 
       "displays the total price with two items" in {
@@ -96,7 +97,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
           order = Map("Cappuccino" -> 1, "Flat White" -> 2)
         )
 
-        printer.receipt should include("total price: 13.35")
+        printer.receipt should include("Total Price: 13.35")
       }
 
       "shows the VAT of an order" in {
