@@ -1,4 +1,8 @@
-# Receipt Printer
+# TDD - Receipt Printer and Till classes: 
+
+**_This is my solution to the supplied task specification below**_
+
+## Specification: Receipt Printer
 
 For this challenge you'll have to:
 [ ] Create a new Scala project, adding a testing library as a dependency
@@ -99,3 +103,13 @@ class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
 Click an emoji to tell us.
 
 <!-- END GENERATED SECTION DO NOT EDIT -->
+
+### Learning 
+- Ensure that the mocked behavior is relevant to the behavior being tested in the current test case. Mocks should mimic the interactions expected during the execution of the tested behavior.
+- Double-check the setup of mock expectations to ensure they match the actual behavior expected during the test. Incorrect mock setup can lead to false negatives or positives in test outcomes.
+- Each test should be isolated and independent of others. Avoid coupling between test cases, and ensure that each test case can run independently without relying on the state or behavior of other tests.
+- Write test cases that are clear, readable, and maintainable. Well-structured tests with descriptive names and clear assertions help in understanding the test intent and debugging failures.
+
+### Further work
+- create an interface to run this from the command line
+- create an interface to interact from a browser
