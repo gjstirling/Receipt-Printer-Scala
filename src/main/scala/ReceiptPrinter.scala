@@ -15,17 +15,6 @@ trait ReceiptGenerator {
 
 case class ReceiptPrinter(cafe: CafeDetails, order: Map[String, Int] = Map(), date: Instant = Instant.now()) extends ReceiptGenerator {
 
-  /**
-   * This method should return a multiline string
-   * representing a ReceiptPrinter receipt that should show
-   * - shop name, address, phone number
-   * - the date and time the receipt was created
-   * - each item in the order, with the price. eg:
-   * 2 x Blueberry Muffin       8.10
-   * 1 x Cappuccino             3.85
-   * - the total price
-   * - the VAT (20% of total price)
-   */
   private val formattedDate: String = {
     DateTimeFormatter
       .ofPattern(DateFormat)
