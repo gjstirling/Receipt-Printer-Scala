@@ -41,6 +41,21 @@ class TillSpec extends AnyWordSpec with Matchers {
         till should include("Muffin Of The Day |  4.55")
       }
     }
+
+    "Add items to an order list" which {
+      "can add a flat white" in {
+        val till = new Till(coffeeConnectionCafe)
+
+        till.addToOrder("Flat White") shouldBe true
+      }
+
+      "can ignore case issues with a flat white" in {
+        val till = new Till(coffeeConnectionCafe)
+
+        till.addToOrder("flat white") shouldBe true
+        till.addToOrder("FLAT WHITE") shouldBe true
+      }
+    }
   }
 
 }
