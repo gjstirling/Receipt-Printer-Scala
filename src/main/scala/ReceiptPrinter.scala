@@ -1,9 +1,7 @@
 import ReceiptPrinter.{DateFormat, VatRate}
-
 import java.time.{Instant, ZoneId}
 import java.time.format.DateTimeFormatter
 
-// src/main/scala/ReceiptPrinter.scala
 case class CafeDetails(shopName: String, address: String, phone: String, prices: Map[String, Double])
 
 object ReceiptPrinter {
@@ -59,7 +57,7 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
   }
 
   private def formatVAT: String = {
-    s"VAT: ${f"${subtotal * ReceiptPrinter.VatRate}%.2f"}"
+    s"VAT: ${f"${subtotal * VatRate}%.2f"}"
   }
 
   def receipt: String = {
