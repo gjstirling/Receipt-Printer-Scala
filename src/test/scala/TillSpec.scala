@@ -1,7 +1,8 @@
+import org.scalamock.scalatest.MockFactory
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class TillSpec extends AnyWordSpec with Matchers {
+class TillSpec extends AnyWordSpec with Matchers with MockFactory {
 
   val coffeeConnectionCafe: CafeDetails = CafeDetails(
     "The Coffee Connection",
@@ -26,15 +27,17 @@ class TillSpec extends AnyWordSpec with Matchers {
     )
   )
 
+  val mockReceiptGenerator: ReceiptGenerator = mock[ReceiptGenerator]
+
   "Till.printMenu" should {
     "return the menu" which {
       "contains a flat white" in {
-        val till = new Till(coffeeConnectionCafe)
+        val till = new Till(coffeeConnectionCafe, receiptGenerator = mockReceiptGenerator)
         till.printMenu should include("Flat White |  4.75")
       }
 
       "contains all items" in {
-        val till = new Till(coffeeConnectionCafe).printMenu
+        val till = new Till(coffeeConnectionCafe, receiptGenerator = mockReceiptGenerator).printMenu
 
         till should include("Cappuccino |  3.85")
         till should include("Chocolate Chip Muffin |  4.05")
@@ -46,26 +49,26 @@ class TillSpec extends AnyWordSpec with Matchers {
   "Till.addToOrder" should {
     "Add items to an order list" which {
       "can add a flat white" in {
-        val till = new Till(coffeeConnectionCafe)
+        val till = new Till(coffeeConnectionCafe, receiptGenerator = mockReceiptGenerator)
 
         till.addToOrder("Flat White") shouldBe true
       }
 
       "can ignore case issues with a flat white" in {
-        val till = new Till(coffeeConnectionCafe)
+        val till = new Till(coffeeConnectionCafe, receiptGenerator = mockReceiptGenerator)
 
         till.addToOrder("flat white") shouldBe true
         till.addToOrder("FLAT WHITE") shouldBe true
       }
 
       "returns false is item is not on the menu" in {
-        val till = new Till(coffeeConnectionCafe)
+        val till = new Till(coffeeConnectionCafe, receiptGenerator = mockReceiptGenerator)
 
         till.addToOrder("Chai Latte") shouldBe false
       }
 
       "can keep track of multiple items" in {
-        val till = new Till(coffeeConnectionCafe)
+        val till = new Till(coffeeConnectionCafe, receiptGenerator = mockReceiptGenerator)
 
         till.addToOrder("flat white") shouldBe true
         till.addToOrder("FLAT WHITE") shouldBe true
@@ -74,12 +77,14 @@ class TillSpec extends AnyWordSpec with Matchers {
     }
   }
 
-  "Till.addToOrder" should {
-    "call the receipt printer" in {
-      val order = Map("Flat White" -> 2, "Chocolate Chip Muffin" -> 1)
-      val till = new Till(coffeeConnectionCafe, order)
+  "Till.generateReceipt" should {
+    "call the receiptGenerator generateReceipt method" in {
+      val till = new Till(coffeeConnectionCafe, receiptGenerator = mockReceiptGenerator)
+      (mockReceiptGenerator.generateReceipt _)
+        .expects(coffeeConnectionCafe, *)
+        .returning("Mocked Receipt")
 
-      till.generateReceipt  should include("Total Price: 13.55")
+      till.generateReceipt shouldBe "Mocked Receipt"
     }
   }
 }

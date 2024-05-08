@@ -9,7 +9,11 @@ object ReceiptPrinter {
   private val VatRate = 0.2
 }
 
-case class ReceiptPrinter(cafe: CafeDetails, order: Map[String, Int] = Map(), date: Instant = Instant.now()) {
+trait ReceiptGenerator {
+  def generateReceipt(cafe: CafeDetails, order: Map[String, Int]): String
+}
+
+case class ReceiptPrinter(cafe: CafeDetails, order: Map[String, Int] = Map(), date: Instant = Instant.now()) extends ReceiptGenerator {
 
   /**
    * This method should return a multiline string
@@ -68,5 +72,10 @@ case class ReceiptPrinter(cafe: CafeDetails, order: Map[String, Int] = Map(), da
        |${formatVAT}
        """.stripMargin
   }
+
+  def generateReceipt(cafe: CafeDetails, order: Map[String, Int]): String = {
+    receipt
+  }
+
 
 }

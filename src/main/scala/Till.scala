@@ -1,4 +1,4 @@
-class Till(val cafeDetails: CafeDetails, order: Map[String, Int] = Map.empty) {
+class Till(val cafeDetails: CafeDetails, order: Map[String, Int] = Map.empty, receiptGenerator: ReceiptGenerator) {
 
   def printMenu: String = {
    cafeDetails.prices
@@ -25,10 +25,7 @@ class Till(val cafeDetails: CafeDetails, order: Map[String, Int] = Map.empty) {
     }
   }
 
-  def generateReceipt = {
-    new ReceiptPrinter(cafeDetails, order).receipt
+  def generateReceipt: String = {
+    receiptGenerator.generateReceipt(cafeDetails, order)
   }
-
-
-
 }
