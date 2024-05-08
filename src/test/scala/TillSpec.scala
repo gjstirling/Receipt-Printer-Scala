@@ -26,8 +26,8 @@ class TillSpec extends AnyWordSpec with Matchers {
     )
   )
 
-  "A Till" should {
-    "Show the menu" which {
+  "Till.printMenu" should {
+    "return the menu" which {
       "contains a flat white" in {
         val till = new Till(coffeeConnectionCafe)
         till.printMenu should include("Flat White |  4.75")
@@ -41,7 +41,9 @@ class TillSpec extends AnyWordSpec with Matchers {
         till should include("Muffin Of The Day |  4.55")
       }
     }
+  }
 
+  "Till.addToOrder" should {
     "Add items to an order list" which {
       "can add a flat white" in {
         val till = new Till(coffeeConnectionCafe)
@@ -55,7 +57,29 @@ class TillSpec extends AnyWordSpec with Matchers {
         till.addToOrder("flat white") shouldBe true
         till.addToOrder("FLAT WHITE") shouldBe true
       }
+
+      "returns false is item is not on the menu" in {
+        val till = new Till(coffeeConnectionCafe)
+
+        till.addToOrder("Chai Latte") shouldBe false
+      }
+
+      "can keep track of multiple items" in {
+        val till = new Till(coffeeConnectionCafe)
+
+        till.addToOrder("flat white") shouldBe true
+        till.addToOrder("FLAT WHITE") shouldBe true
+        till.addToOrder("Double Espresso") shouldBe true
+      }
     }
   }
 
+  "Till.addToOrder" should {
+    "call the receipt printer" in {
+      val order = Map("Flat White" -> 2, "Chocolate Chip Muffin" -> 1)
+      val till = new Till(coffeeConnectionCafe, order)
+
+      till.generateReceipt  should include("Total Price: 13.55")
+    }
+  }
 }

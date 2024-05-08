@@ -9,7 +9,7 @@ object ReceiptPrinter {
   private val VatRate = 0.2
 }
 
-class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(), date: Instant = Instant.now()) {
+case class ReceiptPrinter(cafe: CafeDetails, order: Map[String, Int] = Map(), date: Instant = Instant.now()) {
 
   /**
    * This method should return a multiline string
