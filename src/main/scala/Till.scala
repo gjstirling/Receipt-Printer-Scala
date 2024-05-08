@@ -1,33 +1,31 @@
-class Till (val cafe: CafeDetails, val order: Order = new Order()) {
+class Till(val cafeDetails: CafeDetails, order: Map[String, Int] = Map.empty, receiptGenerator: ReceiptGenerator) {
 
-  def calculateSubtotal = {
-    order.items.foldLeft(0.0) { (total, orderItem) => total + orderItem.totalPrice }
+  def printMenu: String = {
+   cafeDetails.prices
+      .map(item => f"${item._1}%20s | ${item._2}%5.2f")
+      .toList
+      .mkString("\n")
   }
 
-  def calculateVAT = {
-    ((this.calculateSubtotal * 100).toInt * 0.2)/100
+  private def capitalizeString(input: String): String = {
+    input.split("\\s+").map(_.capitalize).mkString(" ")
   }
 
-  def calculateTotal: Double = {
-    this.calculateSubtotal + this.calculateVAT
-  }
+  def addToOrder(requestedItem: String, quantity: Int = 1): Boolean = {
+    val itemName = capitalizeString(requestedItem.toLowerCase)
 
-  def getOrderItem(itemName: String, quantity: Int) = {
-    cafe.prices.get(itemName) match {
-      case Some(pricePerUnit) => new OrderItem(itemName, quantity, pricePerUnit * quantity)
-      case None => throw new IllegalArgumentException(
-        "That item doesn't exist in menu!"
-      )
+    cafeDetails.prices.get(itemName) match {
+      case Some(price) =>
+        val updatedOrder = order + (itemName -> (order.getOrElse(itemName, 0) + quantity))
+        println(s"$quantity $itemName added to the order. Current total: ${updatedOrder(itemName)}")
+        true
+      case None =>
+        println(s"[Till][addToOrder] ERROR: $requestedItem not found")
+        false
     }
   }
 
-  def addItemToOrder(itemName: String, quantity: Int) =
-    order.items = order.items ++ List(getOrderItem(itemName, quantity))
-
+  def generateReceipt: String = {
+    receiptGenerator.generateReceipt(cafeDetails, order)
+  }
 }
-
-// Mocking of instant factory
-//        val mockInstantFactory = mock[FactoryBase[Instant]]
-//        val mockDate = Instant.parse("2022-07-28T14:35:00.00Z")
-//
-//        (mockInstantFactory.create _).expects().returning(mockDate)
