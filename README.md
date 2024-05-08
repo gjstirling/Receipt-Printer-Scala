@@ -40,8 +40,8 @@ To create a JAR file, run:
 - The JAR file (if generated) will be in `target/scala-2.13`.
 
 ## Dependencies
-- ScalaTest: 3.1.0
-- ScalaMock: 5.1.0
+- ScalaTest: 3.2.18
+- ScalaMock: 6.0.0
 
 ## Specification
 For this challenge you'll have to:
