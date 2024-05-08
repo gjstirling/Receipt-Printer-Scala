@@ -1,9 +1,49 @@
 # TDD - Receipt Printer and Till classes: 
 
-**_This is my solution to the supplied task specification below**_
+## About
+This is a Scala project for a Receipt Printer and Till class.
 
-## Specification: Receipt Printer
+### Prerequisites
 
+- [Git](https://git-scm.com/)
+- [SBT](https://www.scala-sbt.org/)
+
+### Installation
+
+1. **Clone the Repository:**
+```git clone https://github.com/gjstirling/Receipt-Printer-Scala```
+
+2. **Navigate to the Project Directory:**
+```cd receipt-printer```
+
+## Usage
+
+### Build the Project
+
+To compile the project, run:
+```sbt compile```
+
+### Run Tests
+
+To execute tests, run:
+```sbt test```
+
+### Generate JAR File
+
+To create a JAR file, run: 
+```sbt assembly```
+
+## Directory Structure
+- Source code is in the `src` directory.
+- Compiled classes are in `target/scala-2.13/classes`.
+- Test reports can be found in `target/test-reports`.
+- The JAR file (if generated) will be in `target/scala-2.13`.
+
+## Dependencies
+- ScalaTest: 3.1.0
+- ScalaMock: 5.1.0
+
+## Specification
 For this challenge you'll have to:
 [ ] Create a new Scala project, adding a testing library as a dependency
 [ ] Create a ReceiptPrinter class (see skeleton code below)
