@@ -2,7 +2,10 @@
 class Till(val cafeDetails: CafeDetails) {
 
   def printMenu: String = {
-    "Flat White   |4.75"
+   cafeDetails.prices
+      .map(item => f"${item._1}%20s | ${item._2}%5.2f")
+      .toList
+      .mkString("\n")
   }
 
 }

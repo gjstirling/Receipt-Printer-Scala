@@ -30,7 +30,15 @@ class TillSpec extends AnyWordSpec with Matchers {
     "Show the menu" which {
       "contains a flat white" in {
         val till = new Till(coffeeConnectionCafe)
-        till.printMenu should include("Flat White   |4.75")
+        till.printMenu should include("Flat White |  4.75")
+      }
+
+      "contains all items" in {
+        val till = new Till(coffeeConnectionCafe).printMenu
+
+        till should include("Cappuccino |  3.85")
+        till should include("Chocolate Chip Muffin |  4.05")
+        till should include("Muffin Of The Day |  4.55")
       }
     }
   }
